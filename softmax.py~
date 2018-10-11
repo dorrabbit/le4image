@@ -1,0 +1,6 @@
+import math
+class Softmax:
+    def softmax(self, midrslt):
+        maxa = max(midrslt)
+        s = math.exp(midrslt - maxa) / sum(math.exp(midrslt - maxa))
+        return s

@@ -1,0 +1,4 @@
+class Hyojun_in:
+    def hyojun_in:
+        z = input("image number? >")
+        return z

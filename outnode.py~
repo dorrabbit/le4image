@@ -1,0 +1,17 @@
+from numpy.random import *
+from softmax import Softmax
+import math
+
+class Outnode:
+    def outnode(self, ylist, midnum, seednum):
+        #random
+        seed(seednum)
+        wran = normal(loc = 0, scale = 1/math.sqrt(midnum), size = (10, midnum))
+        bran = normal(loc = 0, scale = 1/math.sqrt(midnum), size = 10)
+        summid = wran.dot(ylist) + bran
+
+        print(summid)
+
+        softclass = Softmax()
+        soft = softclass.softmax(summid)
+        return soft

@@ -1,0 +1,5 @@
+class Imput:
+    def make_dlist(image):
+        d_list = []
+        for i in image:
+            d_list = d_list.extend(image[i])
