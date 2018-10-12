@@ -1,7 +1,8 @@
-import numpy
+import numpy as np
+import numpy.matlib
 class Softmax:
     def softmax(self, midrslt):
-        maxa = max(midrslt)
-        suma = sum(numpy.exp(midrslt - maxa))
-        ysec = numpy.exp(midrslt - maxa) / suma
+        maxa = (midrslt.max(axis=1)).reshape(100, 1)
+        suma = ((np.exp(midrslt - maxa)).sum(axis=1)).reshape(100, 1)
+        ysec = np.exp(midrslt - maxa) / np.matlib.repmat(suma, 1, 10)
         return ysec
