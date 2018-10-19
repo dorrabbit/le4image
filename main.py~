@@ -1,0 +1,40 @@
+import numpy
+'''
+from hyojun_in import Hyojun_in
+hyoinclass = Hyojun_in()
+innum = hyoinclass.hyojun_in()
+'''
+#print("start") #measure time
+
+from inputer import Inputer
+inclass = Inputer()
+dlist = inclass.inputer()[0]
+#print(dlist)
+anslist = inclass.inputer()[1]
+#print(ylist)
+trainsize = dlist.shape[0] #N
+
+#print("start three_nn") #measure time
+from three_nn import Three_nn
+threeclass = Three_nn()
+
+midnum = 55 #middle_node_of_number
+
+from numpy.random import *
+w_one = normal(loc = 0, scale = 1/numpy.sqrt(784) , size = (midnum, 784))
+b_one = normal(loc = 0, scale = 1/numpy.sqrt(784) , size = (midnum, 100))
+w_two = normal(loc = 0, scale = 1/numpy.sqrt(midnum) , size = (10, midnum))
+b_two = normal(loc = 0, scale = 1/numpy.sqrt(midnum) , size = (10, 100))
+#initialize. change after.
+#!!!!! assign -> number abstruction !!!!!
+    
+for i in range(10): #i <- N/B * 100 or so
+    rannumlist = numpy.random.choice(trainsize, 100, replace=False)
+    xlist = (dlist[rannumlist] / 255).T
+    #xlist.shape=[784,100]
+    ylist = anslist[rannumlist]
+    #ylist.shape=[100,]
+
+    threeclass.three_nn(xlist, ylist, w_one, b_one, w_two, b_two)
+
+    w_one = w_one #update w and b

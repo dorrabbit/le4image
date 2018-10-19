@@ -1,0 +1,10 @@
+import numpy as np
+
+class Diff:
+    def diff(self, en_y, w, x):
+        #en_y.shape = [100, 10]
+        #w.shape = 
+        
+        en_x = np.dot(w.T, en_y)
+        en_w = np.dot(en_y, x.T)
+        en_b = np.sum(en_y, axis=)

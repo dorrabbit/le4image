@@ -4,13 +4,14 @@ from softmax import Softmax
 import math
 
 class Outnode:
-    def outnode(self, ylist, midnum, seednum):
+    def outnode(self, ylist, midnum, w, b):
         #random
-        seed(seednum)
-        wran = normal(loc = 0, scale = 1/math.sqrt(midnum), size = (10, midnum))
-        seed(seednum)
-        bran = normal(loc = 0, scale = 1/math.sqrt(midnum), size = (10, 100))
-        summid = (np.dot(wran, ylist) + bran).T
+        #seed(seednum)
+        #wran = normal(loc = 0, scale = 1/math.sqrt(midnum), size = (10, midnum))
+        #seed(seednum)
+        #bran = normal(loc = 0, scale = 1/math.sqrt(midnum), size = (10, 1))
+
+        summid = np.dot(w, ylist) + b
 
         #print(summid)
 
