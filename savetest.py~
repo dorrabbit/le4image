@@ -1,0 +1,3 @@
+import numpy as np
+saved = np.load('wb_learn.npy')
+print(saved)

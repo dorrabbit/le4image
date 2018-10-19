@@ -20,15 +20,23 @@ threeclass = Three_nn()
 
 midnum = 55 #middle_node_of_number
 
-from numpy.random import *
-w_one = normal(loc = 0, scale = 1/numpy.sqrt(784) , size = (midnum, 784))
-b_one = normal(loc = 0, scale = 1/numpy.sqrt(784) , size = (midnum, 1))
-w_two = normal(loc = 0, scale = 1/numpy.sqrt(midnum) , size = (10, midnum))
-b_two = normal(loc = 0, scale = 1/numpy.sqrt(midnum) , size = (10, 1))
-#initialize. change after.
-#!!!!! assign -> number abstruction !!!!!
+load_yn = input("use saved weight? y/n >")
+if load_yn == "y":
+    w_one = numpy.load('wb_learn.npy')[0]
+    w_two = numpy.load('wb_learn.npy')[1]
+    b_one = numpy.load('wb_learn.npy')[2]
+    b_two = numpy.load('wb_learn.npy')[3]
+else:
+    #initialize
+    from numpy.random import *
+    w_one = normal(loc = 0, scale = 1/numpy.sqrt(784) , size = (midnum, 784))
+    w_two = normal(loc = 0, scale = 1/numpy.sqrt(midnum) , size = (10, midnum))
+    b_one = normal(loc = 0, scale = 1/numpy.sqrt(784) , size = (midnum, 1))
+    b_two = normal(loc = 0, scale = 1/numpy.sqrt(midnum) , size = (10, 1))
     
-for i in range(10000): #i <- N/B * 100 or so
+eponum = 100
+
+for i in range(int(eponum * (trainsize / 100))): #i <- N/B * 100 or so
     rannumlist = numpy.random.choice(trainsize, 100, replace=False)
     xlist = (dlist[rannumlist] / 255).T
     #xlist.shape=[784,100]
@@ -56,3 +64,6 @@ for i in range(10000): #i <- N/B * 100 or so
     w_two = w_two - lr * en_w_two
     b_one = b_one - lr * en_b_one
     b_two = b_two - lr * en_b_two
+
+wb = numpy.array([w_one, w_two, b_one, b_two])
+numpy.save('wb_learn.npy', wb)
