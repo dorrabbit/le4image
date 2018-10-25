@@ -85,4 +85,5 @@ else:
     outrslt = threeclass.three_nn(xlist, y_onehot, w_one, b_one, w_two, b_two, 1)[1]
 
     rslt = numpy.argmax(outrslt)
-    print(rslt, "is written in number", innum, "image.")
+    print(rslt, "is written in number", innum, "image, maybe.")
+    print(ylist, "is written in number", innum, "image, definitely.")
