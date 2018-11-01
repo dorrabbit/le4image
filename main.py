@@ -9,7 +9,10 @@ backclass = Back()
 from hyojun_in import Hyojun_in
 hyoinclass = Hyojun_in()
 from sigmoid import Sigmoid
-sigclass = Sigmoid()
+from relu import Relu
+#
+from dropout import Dropout
+dropclass = Dropout()
 
 iden_train = input("identification or training? i/t > ")
 ####
@@ -24,9 +27,11 @@ sig_relu = input("sigmoid or relu? s/r > ")
 if sig_relu == "s":
     srbool = True
     npyfile = 'wb_learn_s.npy'
+    srclass = Sigmoid()
 elif sig_relu == "r":
     srbool = False
     npyfile = 'wb_learn_r.npy'
+    srclass = Relu()
 ####
 
 dlist = inclass.inputer(itbool)[0]
@@ -64,11 +69,11 @@ if not itbool:
         #y_onehot.shape=[100,10]
         
         (midrslt, outrslt, loss_ave) = \
-                threeclass.three_nn(xlist, y_onehot, w_one, b_one, w_two, b_two, 100, itbool, srbool, sigclass)
+                threeclass.three_nn(xlist, y_onehot, w_one, b_one, w_two, b_two, 100, itbool, srclass, dropclass)
         print(loss_ave)
         
         (en_w_one, en_w_two, en_b_one, en_b_two) = \
-                backclass.back(xlist, midrslt, outrslt, y_onehot, w_one, w_two, srbool)
+                backclass.back(xlist, midrslt, outrslt, y_onehot, w_one, w_two, srclass, dropclass)
 
         en_b_one = en_b_one.reshape(midnum,1)
         en_b_two = en_b_two.reshape(10,1)
@@ -90,7 +95,7 @@ else:
     ylist = anslist[innum]
     y_onehot = numpy.identity(10)[ylist]
     
-    outrslt = threeclass.three_nn(xlist, y_onehot, w_one, b_one, w_two, b_two, 1, itbool, srbool)[1]
+    outrslt = threeclass.three_nn(xlist, y_onehot, w_one, b_one, w_two, b_two, 1, itbool, srclass, dropclass)[1]
 
     rslt = numpy.argmax(outrslt)
     print(rslt, "is written in number", innum, "image, maybe.")

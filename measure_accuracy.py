@@ -1,6 +1,11 @@
 import numpy
 
 from inputer import Inputer
+from sigmoid import Sigmoid
+from relu import Relu
+from dropout import Dropout
+dropclass = Dropout()
+
 inclass = Inputer()
 dlist = inclass.inputer(True)[0]
 #print(dlist)
@@ -11,10 +16,10 @@ trainsize = dlist.shape[0] #N
 sig_relu = input("sigmoid or relu? s/r > ")
 ####
 if sig_relu == "s":
-    srbool = True
+    srclass = Sigmoid()
     npyfile = 'wb_learn_s.npy'
 elif sig_relu == "r":
-    srbool = False
+    srclass = Relu()
     npyfile = 'wb_learn_r.npy'
 ####
 
@@ -37,7 +42,7 @@ for i in range(loopnum):
     ylist = anslist[innum]
     y_onehot = numpy.identity(10)[ylist]
     
-    outrslt = threeclass.three_nn(xlist, y_onehot, w_one, b_one, w_two, b_two, 1, srbool)[1]
+    outrslt = threeclass.three_nn(xlist, y_onehot, w_one, b_one, w_two, b_two, 1, True, srclass, dropclass)[1]
     
     rslt = numpy.argmax(outrslt)
 

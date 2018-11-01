@@ -1,0 +1,5 @@
+
+class Batchnorm:
+    def forward(self, gamma, beta):
+        
+        
