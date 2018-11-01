@@ -1,0 +1,5 @@
+import numpy as np
+class Relu:
+    def relu(self, t):
+        t = np.where(t > 0, t, 0)
+        return t

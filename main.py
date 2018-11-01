@@ -1,39 +1,51 @@
 import numpy
-
-train_iden = input("training or identification? t/i > ")
-
-####
-if train_iden == "i":
-    itbool = True
-elif train_iden == "t":
-    itbool = False
-####
-    
-#print("start") #measure time
-
 from inputer import Inputer
 inclass = Inputer()
+from three_nn import Three_nn
+threeclass = Three_nn()
+from numpy.random import *
+from back import Back
+backclass = Back()
+from hyojun_in import Hyojun_in
+hyoinclass = Hyojun_in()
+from sigmoid import Sigmoid
+sigclass = Sigmoid()
+
+iden_train = input("identification or training? i/t > ")
+####
+if iden_train == "i":
+    itbool = True
+elif iden_train == "t":
+    itbool = False
+####
+
+sig_relu = input("sigmoid or relu? s/r > ")
+####
+if sig_relu == "s":
+    srbool = True
+    npyfile = 'wb_learn_s.npy'
+elif sig_relu == "r":
+    srbool = False
+    npyfile = 'wb_learn_r.npy'
+####
+
 dlist = inclass.inputer(itbool)[0]
 #print(dlist)
 anslist = inclass.inputer(itbool)[1]
 #print(ylist)
 trainsize = dlist.shape[0] #N
 
-from three_nn import Three_nn
-threeclass = Three_nn()
-
 midnum = 55 #middle_node_of_number
 
-w_one = numpy.load('wb_learn.npy')[0]
-w_two = numpy.load('wb_learn.npy')[1]
-b_one = numpy.load('wb_learn.npy')[2]
-b_two = numpy.load('wb_learn.npy')[3]
+w_one = numpy.load(npyfile)[0]
+w_two = numpy.load(npyfile)[1]
+b_one = numpy.load(npyfile)[2]
+b_two = numpy.load(npyfile)[3]
 
 if not itbool:
     load_yn = input("use saved weight? y/n > ")
     if load_yn == "n":
         #initialize
-        from numpy.random import *
         w_one = normal(loc = 0, scale = 1/numpy.sqrt(784) , size = (midnum, 784))
         w_two = normal(loc = 0, scale = 1/numpy.sqrt(midnum) , size = (10, midnum))
         b_one = normal(loc = 0, scale = 1/numpy.sqrt(784) , size = (midnum, 1))
@@ -52,13 +64,11 @@ if not itbool:
         #y_onehot.shape=[100,10]
         
         (midrslt, outrslt, loss_ave) = \
-                threeclass.three_nn(xlist, y_onehot, w_one, b_one, w_two, b_two, 100)
+                threeclass.three_nn(xlist, y_onehot, w_one, b_one, w_two, b_two, 100, itbool, srbool, sigclass)
         print(loss_ave)
         
-        from back import Back
-        backclass = Back()
         (en_w_one, en_w_two, en_b_one, en_b_two) = \
-                backclass.back(xlist, midrslt, outrslt, y_onehot, w_one, w_two)
+                backclass.back(xlist, midrslt, outrslt, y_onehot, w_one, w_two, srbool)
 
         en_b_one = en_b_one.reshape(midnum,1)
         en_b_two = en_b_two.reshape(10,1)
@@ -71,18 +81,16 @@ if not itbool:
         b_two = b_two - lr * en_b_two
         
     wb = numpy.array([w_one, w_two, b_one, b_two])
-    numpy.save('wb_learn.npy', wb)
+    numpy.save(npyfile, wb)
 
 else:
-    from hyojun_in import Hyojun_in
-    hyoinclass = Hyojun_in()
     innum = hyoinclass.hyojun_in()
 
     xlist = (dlist[innum] / 255).T
     ylist = anslist[innum]
     y_onehot = numpy.identity(10)[ylist]
     
-    outrslt = threeclass.three_nn(xlist, y_onehot, w_one, b_one, w_two, b_two, 1)[1]
+    outrslt = threeclass.three_nn(xlist, y_onehot, w_one, b_one, w_two, b_two, 1, itbool, srbool)[1]
 
     rslt = numpy.argmax(outrslt)
     print(rslt, "is written in number", innum, "image, maybe.")

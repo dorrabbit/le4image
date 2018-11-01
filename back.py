@@ -1,5 +1,7 @@
+import numpy as np
+from diff import Diff
 class Back:
-    def back(self, xlist, midrslt, outrslt, anslist, w_one, w_two): #and more
+    def back(self, xlist, midrslt, outrslt, anslist, w_one, w_two, srbool):
         #ylist.shape = [10, 100]
         #anslist.shape = [100, 10]
 
@@ -7,14 +9,22 @@ class Back:
         en_ak = (outrslt - anslist.T) / 100
         #en_ak.shape = [10,100]
 
-        from diff import Diff
         diffclass = Diff()
         #out back-propagation
         (en_midrslt, en_w_two, en_b_two) = \
                         diffclass.diff(en_ak, w_two, midrslt)
+
+        #dropout back-propagation
         
-        #sigmoid back-propagation
-        pre_sig = (1 - en_midrslt) * en_midrslt
+
+        if srbool:
+            #sigmoid back-propagation
+            pre_sig = (1 - en_midrslt) * en_midrslt
+        else:
+            #ReLU back-propagation
+            #print(en_midrslt.shape)
+            pre_sig = np.where(en_midrslt > 0, 1, 0) # * en_midrslt
+            #print(pre_sig)
         
         #middle back-propagation
         (en_x, en_w_one, en_b_one) = \

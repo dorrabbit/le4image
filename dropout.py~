@@ -1,0 +1,9 @@
+import numpy as np
+from numpy.random import *
+
+class Dropout:
+    def dropout(sig, rho, midnum):
+        #sig.shape=[55,100]
+        for i in range(99):
+            rannumlist = np.random.choice(midnum, midnum * rho, replace=False)
+            sig[i][rannumlist]=0

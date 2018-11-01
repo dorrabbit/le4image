@@ -1,0 +1,43 @@
+import numpy
+
+from inputer import Inputer
+inclass = Inputer()
+dlist = inclass.inputer(True)[0]
+#print(dlist)
+anslist = inclass.inputer(True)[1]
+#print(ylist)
+trainsize = dlist.shape[0] #N
+
+from three_nn import Three_nn
+threeclass = Three_nn()
+
+midnum = 55 #middle_node_of_number
+
+w_one = numpy.load('wb_learn.npy')[0]
+w_two = numpy.load('wb_learn.npy')[1]
+b_one = numpy.load('wb_learn.npy')[2]
+b_two = numpy.load('wb_learn.npy')[3]
+
+loopnum = 10000
+truenum = 0
+for i in range(loopnum):
+    innum = numpy.random.choice(trainsize, replace=True)
+    
+    xlist = (dlist[innum] / 255).T
+    ylist = anslist[innum]
+    y_onehot = numpy.identity(10)[ylist]
+    
+    outrslt = threeclass.three_nn(xlist, y_onehot, w_one, b_one, w_two, b_two, 1)[1]
+    
+    rslt = numpy.argmax(outrslt)
+
+    accbool = ylist == rslt
+
+    if accbool:
+        truenum = truenum + 1
+    #else:
+    #    print(innum, ylist, rslt)
+        
+print("accuracy is", (truenum / loopnum) * 100, "%.")
+
+    
