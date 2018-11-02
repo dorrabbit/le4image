@@ -1,7 +1,7 @@
 import numpy as np
 import numpy.matlib
 class Softmax:
-    def softmax(self, midrslt, batchnum):
+    def softmax(midrslt, batchnum):
         #print(midrslt.shape)
         maxa = (midrslt.max(axis=0)).reshape(1, batchnum)
         suma = ((np.exp(midrslt - maxa)).sum(axis=0)).reshape(1, batchnum)

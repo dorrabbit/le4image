@@ -5,6 +5,7 @@ from sigmoid import Sigmoid
 from relu import Relu
 from dropout import Dropout
 dropclass = Dropout()
+from batchnorm import Batchnorm
 
 inclass = Inputer()
 dlist = inclass.inputer(True)[0]
@@ -28,11 +29,9 @@ threeclass = Three_nn()
 
 midnum = 55 #middle_node_of_number
 
-w_one = numpy.load(npyfile)[0]
-w_two = numpy.load(npyfile)[1]
-b_one = numpy.load(npyfile)[2]
-b_two = numpy.load(npyfile)[3]
+[w_one, w_two, b_one, b_two, gamma, beta, running_mean, running_var] = numpy.load(npyfile)
 
+normclass = Batchnorm(gamma, beta, 0.9, running_mean, running_var)
 loopnum = 10000
 truenum = 0
 for i in range(loopnum):
@@ -42,7 +41,7 @@ for i in range(loopnum):
     ylist = anslist[innum]
     y_onehot = numpy.identity(10)[ylist]
     
-    outrslt = threeclass.three_nn(xlist, y_onehot, w_one, b_one, w_two, b_two, 1, True, srclass, dropclass)[1]
+    outrslt = threeclass.three_nn(xlist, y_onehot, w_one, b_one, w_two, b_two, 1, True, srclass, dropclass, normclass)[1]
     
     rslt = numpy.argmax(outrslt)
 

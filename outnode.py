@@ -4,7 +4,7 @@ from softmax import Softmax
 import math
 
 class Outnode:
-    def outnode(self, ylist, midnum, w, b, batchnum):
+    def outnode(self, ylist, midnum, w, b, batchnum, itbool, normclass):
         #random
         #seed(seednum)
         #wran = normal(loc = 0, scale = 1/math.sqrt(midnum), size = (10, midnum))
@@ -13,6 +13,7 @@ class Outnode:
 
         summid = np.dot(w, ylist) + b
 
-        softclass = Softmax()
-        soft = softclass.softmax(summid, batchnum)
-        return soft
+        (sum_norm, running_mean, running_var) = normclass.forward(summid, itbool)
+    
+        soft = Softmax.softmax(sum_norm, batchnum)
+        return (soft, running_mean, running_var)

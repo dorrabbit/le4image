@@ -2,7 +2,7 @@ import numpy as np
 from numpy.random import *
 
 class Dropout:
-    def __init__(self, rho=0.5):
+    def __init__(self, rho=0):
         self.rho = rho
         self.mask = None
         
