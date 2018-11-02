@@ -4,7 +4,7 @@ from dropout import Dropout
 import math
 
 class Middle:
-    def middle(self, xlist, prenum, nownum, w, b, batchnum, srclass):
+    def middle(xlist, prenum, nownum, w, b, batchnum, itbool, srclass, normclass):
         #random
         #seed(seednum)
         #wran = normal(loc = 0, scale = 1/math.sqrt(prenum) , size = (nownum, prenum))
@@ -15,7 +15,9 @@ class Middle:
         summid = np.dot(w, xlist) + b
 
         #print(summid.shape)
-        sig = srclass.forward(summid)
+        (sum_norm, running_mean, running_var) = normclass.forward(summid, itbool)
+        
+        sig = srclass.forward(sum_norm)
         #sig.shape=[55,100]
         
-        return sig
+        return (sig, running_mean, running_var)
