@@ -1,0 +1,15 @@
+import numpy as np
+class Adam:
+    def __init__(self):
+        self.t = 0
+        self.m = 0
+        self.v = 0
+        self.alpha = 0.001
+        self.beta_one = 0.9
+        self.beta_two = 0.999
+        self.epsilon = 10e-8
+
+    def update(self, en_w):
+        self.t = self.t + 1
+        self.m = self.beta_one * self.m + (1 - self.beta_one) * en_w
+        self.v = self.beta_two * self.v + (1 - self.beta_two) * (en_w ** 2)
