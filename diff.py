@@ -1,7 +1,7 @@
 import numpy as np
 
 class Diff:
-    def diff(self, en_y, w, x):
+    def diff(en_y, w, x):
         #in _two
         #en_y.shape = [10,100]
         #w.shape = [10,55]
@@ -16,7 +16,7 @@ class Diff:
         #en_x.shape = [55,100]
         en_w = np.dot(en_y, x.T)
         #en_w.shape = [10,55]
-        en_b = np.sum(en_y, axis=1)
-        #en_b.shape = [10,1]
-
+        en_b = np.sum(en_y, axis=1).reshape(-1, 1)
+        #print(en_b.shape)# = [10,1]
+        
         return (en_x, en_w, en_b)

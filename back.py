@@ -12,10 +12,9 @@ class Back:
         #batch-norm back-propagation
         (en_midrslt, en_gamma_out, en_beta_out) = normclass_out.backward(en_ak)
         
-        diffclass = Diff()
         #out back-propagation
         (en_midrslt, en_w_two, en_b_two) = \
-                        diffclass.diff(en_ak, w_two, midrslt)
+                        Diff.diff(en_ak, w_two, midrslt)
 
         #dropout back-propagation
         pre_drop = dropclass.backward(en_midrslt)
@@ -27,6 +26,6 @@ class Back:
         
         #middle back-propagation
         (en_x, en_w_one, en_b_one) = \
-                        diffclass.diff(en_summid, w_one, xlist)
+                        Diff.diff(en_summid, w_one, xlist)
 
         return (en_w_one, en_w_two, en_b_one, en_b_two, en_gamma_mid, en_beta_mid, en_gamma_out, en_beta_out)

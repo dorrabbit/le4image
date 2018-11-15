@@ -124,9 +124,6 @@ if not itbool:
         (en_w_one, en_w_two, en_b_one, en_b_two, en_gamma_mid, en_beta_mid, en_gamma_out, en_beta_out) = \
                 backclass.back(xlist, midrslt, outrslt, y_onehot, w_one, w_two, \
                                srclass, dropclass, normclass_mid, normclass_out)
-
-        en_b_one = en_b_one.reshape(midnum,1)
-        en_b_two = en_b_two.reshape(10,1)
     
         #update w and b
         w_one = w_one - w_one_adamclass.update_amount(en_w_one)
