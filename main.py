@@ -62,22 +62,28 @@ midnum = 55 #middle_node_of_number
 #b_two = numpy.load(npyfile)[3]
 
 if not itbool:
-    load_yn = input("\r" + "use saved weight? y/n > ")
-    if load_yn == "n":
-        #initialize
-        w_one = normal(loc = 0, scale = 1/numpy.sqrt(784) , size = (midnum, 784))
-        w_two = normal(loc = 0, scale = 1/numpy.sqrt(midnum) , size = (10, midnum))
-        b_one = normal(loc = 0, scale = 1/numpy.sqrt(784) , size = (midnum, 1))
-        b_two = normal(loc = 0, scale = 1/numpy.sqrt(midnum) , size = (10, 1))
-        
-        gamma_mid = numpy.ones((midnum, 1))
-        beta_mid = numpy.zeros((midnum, 1))
-        gamma_out = numpy.ones((10, 1))
-        beta_out = numpy.zeros((10, 1))
-        running_mean_mid = None
-        running_var_mid = None
-        running_mean_out = None
-        running_var_out = None
+    while True:
+        load_yn = input("\r" + "use saved weight? y/n > ")
+        if load_yn == "n":
+            #initialize
+            w_one = normal(loc = 0, scale = 1/numpy.sqrt(784) , size = (midnum, 784))
+            w_two = normal(loc = 0, scale = 1/numpy.sqrt(midnum) , size = (10, midnum))
+            b_one = normal(loc = 0, scale = 1/numpy.sqrt(784) , size = (midnum, 1))
+            b_two = normal(loc = 0, scale = 1/numpy.sqrt(midnum) , size = (10, 1))
+            
+            gamma_mid = numpy.ones((midnum, 1))
+            beta_mid = numpy.zeros((midnum, 1))
+            gamma_out = numpy.ones((10, 1))
+            beta_out = numpy.zeros((10, 1))
+            running_mean_mid = None
+            running_var_mid = None
+            running_mean_out = None
+            running_var_out = None
+            break
+        elif load_yn == "y":
+            break
+        else:
+            print("illegal input from keyboard.")
     
     eponum = 100
 

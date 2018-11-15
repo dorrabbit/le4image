@@ -1,0 +1,18 @@
+import numpy as np
+
+class convolutional:
+    def __init__(self):
+        self.fsize_x = 3
+        self.fsize_y = 3
+        self.fsize_z = 1
+        self.k = 20
+        #w.shape = (20, 9)
+        
+    def forward(self, image):
+        #image.shape(100, 28, 28)
+
+        #padding
+        image = np.insert(image, [0, image.shape[1]], 0, axis=1)
+        image = np.insert(image, [0, image.shape[2]], 0, axis=2)
+
+        
