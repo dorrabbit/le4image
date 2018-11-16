@@ -11,7 +11,7 @@ class Middle:
         #seed(seednum)
         #bran = normal(loc = 0, scale = 1/math.sqrt(prenum) , size = (nownum, 1))
 
-        xlist = xlist.reshape(prenum,batchnum)
+        xlist = xlist.reshape(-1,batchnum)
         summid = np.dot(w, xlist) + b
 
         #print(summid.shape)

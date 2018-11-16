@@ -1,0 +1,10 @@
+class Pooling:
+    def __init__(self):
+        self.x = None
+        
+    def forward(self, image):
+        #image.shape = (20*28*28, 100)
+        self.x = image.T.reshape(20, -1, 28, 28)
+        batchsize = self.x.shape[1]
+
+        

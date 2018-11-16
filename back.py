@@ -28,4 +28,4 @@ class Back:
         (en_x, en_w_one, en_b_one) = \
                         Diff.diff(en_summid, w_one, xlist)
 
-        return (en_w_one, en_w_two, en_b_one, en_b_two, en_gamma_mid, en_beta_mid, en_gamma_out, en_beta_out)
+        return (en_x, en_w_one, en_w_two, en_b_one, en_b_two, en_gamma_mid, en_beta_mid, en_gamma_out, en_beta_out)
